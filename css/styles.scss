@@ -10,8 +10,8 @@ $font:'Roboto Mono', monospace;;
     box-sizing: border-box;
 }
 .container{
-    background-image: url("../res/images/wallhaven-g78wkd_1920x1080.png");
-    background-size:cover ;
+    background-image: url("../res/images/wallhaven-g78wkd_1920x1080.png") center center fixed;
+    background-size:cover;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -42,3 +42,4 @@ $font:'Roboto Mono', monospace;;
     background-color: #685c7e;
     border: 3px solid #4f253d;
 }
+
