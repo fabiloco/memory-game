@@ -1,0 +1,34 @@
+.container{
+    background: url('../../res/images/wallhaven-g78wkd_1920x1080.png') center center fixed;
+    //background-image: url("../../res/images/wallhaven-g78wkd_1920x1080.png");
+    background-size:cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.title{
+    font-size: 5em;
+}
+.start-button{
+    display: inline-block;
+    padding: 10px 30px 10px 30px;
+    margin-top: 20px;
+    font-size: 2em;
+    background-color: #3d2c5e;
+    border: 3px solid #4f253d;
+    border-radius: 100px;
+    border-bottom: 7px solid #4f253d;
+    transition: all 300ms;
+}
+
+.start-button:hover{
+    transform: translateY(4px);
+    background-color: #685c7e;
+    border: 3px solid #4f253d;
+}
