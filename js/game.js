@@ -22,6 +22,26 @@ class Game{
         array.sort(() => Math.random() - 0.5);
     }
 
+    renderCards(ponies, container){
+        ponies.forEach(pony => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+
+            const front = document.createElement('div');
+            front.classList.add('card-front');
+            
+            const back = document.createElement('div');
+            back.classList.add('card-back');
+
+            back.innerHTML = `<img class="card-back-img" src="${pony.image[0]}"> </img>`;
+
+            card.appendChild(front);
+            card.appendChild(back);
+
+            container.appendChild(card);
+        });
+    }
+
     getPonies(url){
         fetch(url)
             .then(res => res.json())
@@ -36,12 +56,7 @@ class Game{
                 const cardContainer = document.createElement('div');
                 cardContainer.classList.add('cards');
 
-                this.allPoniesInfo.forEach(pony => {
-                    let card = document.createElement('div');
-                    card.classList.add('card');
-                    card.innerHTML = `<img class="card-img" src="${pony.image[0]}"> </img>`;
-                    cardContainer.appendChild(card);
-                });
+                this.renderCards(this.allPoniesInfo, cardContainer);
 
                 container.appendChild(cardContainer);
             });
