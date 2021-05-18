@@ -419,9 +419,7 @@
   transition: 0.6s;
   transform-style: preserve-3d;
   transform-origin: 50% 0;
-}
-.cards .card:hover {
-  transform: rotateY(-180deg);
+  z-index: 100;
 }
 .cards .card-front, .cards .card-back {
   position: absolute;
@@ -433,15 +431,19 @@
 .cards .card-front {
   transform: rotateY(0deg);
   z-index: 2;
-  background-color: red;
+  background-color: blueviolet;
 }
 .cards .card-back {
   transform: rotateY(-180deg);
+  background-size: cover;
 }
-.cards .card-back-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+
+.rotate {
+  transform: rotateY(180deg);
+}
+
+.normal {
+  transform: rotateY(0);
 }
 
 /*# sourceMappingURL=styles.css.map */

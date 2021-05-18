@@ -3,7 +3,7 @@ const container = document.getElementById('game-container');
 class Game{
     
     constructor(){
-        const API_URL = "http://ponyweb.ml/v1/";
+        const API_URL = "https://ponyweb.ml/v1/";
         const MAX_PONIES = 10;
         this.allPoniesInfo = []
 
@@ -32,13 +32,24 @@ class Game{
             
             const back = document.createElement('div');
             back.classList.add('card-back');
-
-            back.innerHTML = `<img class="card-back-img" src="${pony.image[0]}"> </img>`;
+            back.style.backgroundImage = `url('${pony.image[0]}')`
+            //back.innerHTML = `<img class="card-back-img" src="${pony.image[0]}"> </img>`;
 
             card.appendChild(front);
             card.appendChild(back);
 
             container.appendChild(card);
+        });
+    }
+
+    addEvents(){
+        window.addEventListener('click', e => {
+            console.log(e.target);
+            if(e.target.parentNode.classList.contains("card")){
+                e.target.parentNode.classList.toggle("rotate");
+                console.log(e.target);
+                console.log(e.target.parentNode);
+            }
         });
     }
 
@@ -55,10 +66,13 @@ class Game{
 
                 const cardContainer = document.createElement('div');
                 cardContainer.classList.add('cards');
+                cardContainer.id = "cards";
 
                 this.renderCards(this.allPoniesInfo, cardContainer);
 
                 container.appendChild(cardContainer);
+
+                this.addEvents();
             });
     }
 }
