@@ -393,4 +393,30 @@
   border: 3px solid #4f253d;
 }
 
+.game-container {
+  width: 80%;
+  height: 100vh;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(5, 100px);
+  grid-template-rows: repeat(5, 100px);
+  grid-gap: 10px;
+}
+.cards .card {
+  width: 100px;
+  height: 100px;
+}
+.cards .card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /*# sourceMappingURL=styles.css.map */
