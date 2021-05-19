@@ -9,7 +9,6 @@ class Game{
     constructor(){
         this.API_URL = "https://ponyweb.ml/v1/";
         this.MAX_PONIES = 10;
-        this.cardContainer = document.createElement('div');
 
         loading.style.display = "flex";
 
@@ -22,6 +21,8 @@ class Game{
     }
 
     init(){
+        this.cardContainer = document.createElement('div');
+
         this.allPoniesInfo = []
 
         this.firstSelect = {node:undefined, id:0};
@@ -52,8 +53,15 @@ class Game{
 
     playAgain(){
         playAgainBtn.addEventListener('click', (e) => {
+            this.removeEvents();
+            this.stopTime();
+            this.time = '00:00';
+            this.refreshMovements(0);
+            this.showClock();
+            document.getElementById('game-time').textContent = "Time: 00:00";
             this.deleteCards();
-            //this.init();
+            loading.style.display = "flex";
+            setTimeout(this.init, 2000);
         });
     }
 
@@ -171,6 +179,7 @@ class Game{
     }
 
     removeEvents() {
+        console.log("Removing events");
         window.removeEventListener('click', this.clickCard);
     }
 
