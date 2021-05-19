@@ -73,8 +73,8 @@ class Game{
             front.classList.add('card-front');
             
             // Show id
-            //front.textContent = pony.id;
-            front.textContent = "?";
+            front.textContent = pony.id;
+            //front.textContent = "?";
             
             const back = document.createElement('div');
             back.classList.add('card-back');
@@ -134,6 +134,10 @@ class Game{
                         this.firstMovement = false;
                         this.toggleCard(this.secondSelect.node);
                         this.corrects.push(e.target.parentNode.id);
+                        console.log(this.corrects.length);
+                        if(this.corrects.length === this.MAX_PONIES) {
+                            this.win();
+                        }
                     }
 
                     else if (this.firstSelect.id !== this.secondSelect.id){
@@ -184,6 +188,16 @@ class Game{
             });
     }
 
+    win() {
+        this.stopTime();
+        Swal.fire({
+            title: 'Congrats!',
+            text: `You have completed the memory game in ${this.time} and with ${this.movements} movements.` ,
+            icon: 'success',
+            confirmButtonText: 'Cool'
+          })
+    }
+
     startClock(){
         if(this.stop == true){
             this.stop = false;
@@ -206,7 +220,7 @@ class Game{
                 this.minutes = 0;
                 this.hour++;
             }
-            
+
             this.showClock();
             setTimeout(this.clock, 100);
         }
