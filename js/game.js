@@ -7,6 +7,9 @@ class Game{
         const MAX_PONIES = 10;
         this.allPoniesInfo = []
 
+        this.firstSelect = {node:undefined, id:0};
+        this.secondSelect = {node:undefined, id:0};
+
         this.firstMovement = false;
         this.corrects = [];
         this.movements = [];
@@ -15,7 +18,7 @@ class Game{
 
         this.suffleArray(this.poniesIds);
 
-        this.getPonies(`${API_URL}character/all?limit=10`);
+        this.getPonies(`${API_URL}character/all?limit=${MAX_PONIES}`);
 
         this.clickCard = this.clickCard.bind(this);
     }
@@ -36,7 +39,9 @@ class Game{
 
             const front = document.createElement('div');
             front.classList.add('card-front');
-            front.textContent = pony.id;
+            
+            // Show id's
+            //front.textContent = pony.id;
             
             const back = document.createElement('div');
             back.classList.add('card-back');
@@ -59,61 +64,42 @@ class Game{
     }
 
     clickCard(e){
-
         if(e.target.parentNode.classList.contains("card") && !this.corrects.includes(e.target.parentNode.id)){
                 
             if(!this.firstMovement) {
-                
-                this.movements.push(e.target.parentNode);
-
+                this.firstSelect.node = e.target.parentNode;
+                this.firstSelect.id = e.target.parentNode.id;
                 this.firstMovement = true;
-                
-                //e.target.parentNode.classList.toggle("rotate");
-                
-                this.toggleCard(this.movements[this.movements.length-1]);
+                this.toggleCard(this.firstSelect.node);
 
             }else if(this.firstMovement) {
-                
-                this.movements.push(e.target.parentNode);
+                this.secondSelect.node = e.target.parentNode;
+                this.secondSelect.id = e.target.parentNode.id;
 
-                this.toggleCard(this.movements[this.movements.length-1]);
-
-
-                if(this.movements[this.movements.length-1] === this.movements[this.movements.length-2]) {
+                if(this.firstSelect.node === this.secondSelect.node) {
                     console.log("same");
-                    //this.firstMovement = false;
                 }
 
-                if(this.movements[this.movements.length-1] !== this.movements[this.movements.length-2]) {
+                if(this.firstSelect.node !== this.secondSelect.node) {
 
-                    if(this.movements[this.movements.length-1].id === this.movements[this.movements.length-2].id) {
+                    if(this.firstSelect.id === this.secondSelect.id) {
                         console.log("Right")
                         this.firstMovement = false;
-
-                        //e.target.parentNode.classList.toggle("rotate");
-
+                        this.toggleCard(this.secondSelect.node);
                         this.corrects.push(e.target.parentNode.id);
-
                     }
 
-                    else if (this.movements[this.movements.length-1].id !== this.movements[this.movements.length-2].id){
+                    else if (this.firstSelect.id !== this.secondSelect.id){
                         console.log("Wrong");
                         this.firstMovement = false;
-
-                        //e.target.parentNode.classList.toggle("rotate");
-                        
-                        // this.firstSelect.node.classList.toggle('rotate');
-                        // this.secondSelect.node.classList.toggle('rotate');
-
+                        this.toggleCard(this.secondSelect.node);
                         this.removeEvents();
 
                         setTimeout(()=>{
-                            this.toggleCard(this.movements[this.movements.length-1]);
-                            this.toggleCard(this.movements[this.movements.length-2]);
-
+                            this.toggleCard(this.firstSelect.node);
+                            this.toggleCard(this.secondSelect.node);
                             this.addEvents();
                         }, 500);
-                            
                     }
                 }
             }
