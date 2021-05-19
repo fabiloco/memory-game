@@ -2,6 +2,7 @@ const container = document.getElementById('game-container');
 const playAgainBtn = document.getElementById('playAgainBtn');
 const gameMovements = document.getElementById('game-movements');
 const gameTime = document.getElementById('game-time');
+const loading = document.getElementById('loading');
 
 class Game{
     
@@ -10,7 +11,12 @@ class Game{
         this.MAX_PONIES = 10;
         this.cardContainer = document.createElement('div');
 
-        this.init();
+        loading.style.display = "flex";
+
+        this.init = this.init.bind(this);
+
+        setTimeout(this.init, 2000);
+        //this.init();
 
         this.playAgain();
     }
@@ -47,7 +53,7 @@ class Game{
     playAgain(){
         playAgainBtn.addEventListener('click', (e) => {
             this.deleteCards();
-            this.init();
+            //this.init();
         });
     }
 
@@ -60,7 +66,9 @@ class Game{
     }
 
     deleteCards(){
-        this.cardContainer.parentNode.innerHTML= "";
+        console.log(container);
+        console.log(container.getElementsByClassName('cards'));
+        container.removeChild(container.getElementsByClassName('cards')[0]);
     }
 
     renderCards(ponies, container){
@@ -185,6 +193,8 @@ class Game{
                 container.appendChild(this.cardContainer);
 
                 this.addEvents();
+
+                loading.style.display = "none";
             });
     }
 

@@ -349,6 +349,44 @@
   animation: heartbeat 1.5s ease-in-out infinite both;
 }
 
+@keyframes rainbow-bg {
+  100%, 0% {
+    background-color: red;
+  }
+  8% {
+    background-color: #ff7f00;
+  }
+  16% {
+    background-color: yellow;
+  }
+  25% {
+    background-color: chartreuse;
+  }
+  33% {
+    background-color: lime;
+  }
+  41% {
+    background-color: springgreen;
+  }
+  50% {
+    background-color: aqua;
+  }
+  58% {
+    background-color: #007fff;
+  }
+  66% {
+    background-color: blue;
+  }
+  75% {
+    background-color: #7f00ff;
+  }
+  83% {
+    background-color: fuchsia;
+  }
+  91% {
+    background-color: #ff007f;
+  }
+}
 * {
   margin: 0;
   padding: 0;
@@ -359,7 +397,6 @@
 }
 
 .container {
-  background: url("../../res/images/wallhaven-g78wkd_1920x1080.png") center center fixed;
   background-size: cover;
   height: 100vh;
   display: flex;
@@ -369,6 +406,45 @@
   text-align: center;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow-x: hidden;
+}
+.container__bg {
+  position: absolute;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.container__bg-block {
+  width: 100%;
+  height: 25%;
+}
+.container__bg-block:first-of-type {
+  animation: rainbow-bg 2.5s linear;
+  animation-iteration-count: infinite;
+  animation-delay: 100ms;
+}
+.container__bg-block:nth-of-type(2) {
+  animation: rainbow-bg 2.5s linear;
+  animation-iteration-count: infinite;
+  animation-delay: 200ms;
+}
+.container__bg-block:nth-of-type(3) {
+  animation: rainbow-bg 2.5s linear;
+  animation-iteration-count: infinite;
+  animation-delay: 300ms;
+}
+.container__bg-block:nth-of-type(4) {
+  animation: rainbow-bg 2.5s linear;
+  animation-iteration-count: infinite;
+  animation-delay: 400ms;
+}
+.container__bg-block:nth-of-type(5) {
+  animation: rainbow-bg 2.5s linear;
+  animation-iteration-count: infinite;
+  animation-delay: 500ms;
 }
 
 .title {
@@ -393,9 +469,26 @@
   border: 3px solid #4f253d;
 }
 
+.dashie {
+  position: absolute;
+  background-image: url("https://i.ibb.co/3ysXXJn/133-1336397-download-rainbow-dash-flying-png-photos-my-little-removebg-preview.png");
+  background-size: cover;
+  width: 28vw;
+  height: 25vh;
+  top: 45vh;
+  left: 66vw;
+  z-index: 200;
+  animation: dashie-fly 1s;
+}
+
+@keyframes dashie-fly {
+  from {
+    left: -45vw;
+  }
+}
 .game {
   height: 100vh;
-  background-image: url("../../res/images/game-bg.jpg");
+  background-image: url("https://i.ibb.co/WpkLY7q/game-bg.jpg");
   background-size: cover;
 }
 
@@ -455,6 +548,7 @@
 
 .game-options {
   background-color: #E8F8F370;
+  border: 3px solid #E8F8F390;
   width: 40%;
   margin-left: auto;
   margin-right: auto;
@@ -482,6 +576,39 @@
 
 .normal {
   transform: rotateY(0);
+}
+
+.loading {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 30%;
+  left: 44%;
+  z-index: 200;
+  border-radius: 8px;
+  background-color: #E8F8F370;
+  width: 230px;
+  border: 3px solid #E8F8F390;
+}
+.loading .loading-icon {
+  background-image: url("https://preview.redd.it/u0tcjayept5z.gif?format=png8&s=9267c48b2b31f2e354c8228ebdd499b0535d6b8f");
+  background-size: cover;
+  width: 80px;
+  height: 80px;
+  animation: rotating 2s linear infinite;
+}
+.loading p {
+  font-size: 1.4em;
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */

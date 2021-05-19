@@ -1,6 +1,6 @@
 .game{
     height: 100vh;
-    background-image: url("../../res/images/game-bg.jpg");
+    background-image: url("https://i.ibb.co/WpkLY7q/game-bg.jpg");
     background-size: cover;
 }
 
@@ -69,6 +69,7 @@
 
 .game-options{
     background-color: #E8F8F370;
+    border: 3px solid #E8F8F390;
     width: 40%;
     margin-left: auto;
     margin-right: auto;
@@ -98,4 +99,38 @@
 
 .normal{
     transform: rotateY(0);
+}
+
+.loading{
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 30%;
+    left: 44%;
+    z-index: 200;
+    border-radius: 8px;
+    background-color: #E8F8F370;
+    width: 230px;
+    border: 3px solid #E8F8F390;
+
+    .loading-icon{
+        background-image: url("https://preview.redd.it/u0tcjayept5z.gif?format=png8&s=9267c48b2b31f2e354c8228ebdd499b0535d6b8f");
+        background-size: cover;
+        width: 80px;
+        height: 80px;
+        animation: rotating 2s linear infinite;
+    }
+    p{
+        font-size: 1.4em;
+    }
+}
+
+@keyframes rotating {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
 }

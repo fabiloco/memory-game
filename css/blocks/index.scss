@@ -1,5 +1,5 @@
 .container{
-    background: url('../../res/images/wallhaven-g78wkd_1920x1080.png') center center fixed;
+    //background: url('../../res/images/wallhaven-g78wkd_1920x1080.png') center center fixed;
     //background-image: url("../../res/images/wallhaven-g78wkd_1920x1080.png");
     background-size:cover;
     height: 100vh;
@@ -10,6 +10,49 @@
     text-align: center;
     justify-content: center;
     align-items: center;
+    position: relative;
+    overflow-x: hidden;
+
+    &__bg{
+        position: absolute;
+        background-color: white;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        &-block{
+            width: 100%;
+            height: 25%;
+
+            &:first-of-type{
+                animation: rainbow-bg 2.5s linear;
+	            animation-iteration-count: infinite;
+                animation-delay: 100ms;
+            }
+            &:nth-of-type(2){
+                animation: rainbow-bg 2.5s linear;
+	            animation-iteration-count: infinite;
+                animation-delay: 200ms;
+            }
+            &:nth-of-type(3){
+                animation: rainbow-bg 2.5s linear;
+	            animation-iteration-count: infinite;
+                animation-delay: 300ms;
+            }
+            &:nth-of-type(4){
+                animation: rainbow-bg 2.5s linear;
+	            animation-iteration-count: infinite;
+                animation-delay: 400ms;
+            }
+            &:nth-of-type(5){
+                animation: rainbow-bg 2.5s linear;
+	            animation-iteration-count: infinite;
+                animation-delay: 500ms;
+            }
+        }
+    }
+
 }
 
 .title{
@@ -31,4 +74,25 @@
     transform: translateY(4px);
     background-color: #685c7e;
     border: 3px solid #4f253d;
+}
+
+.dashie{
+    position: absolute;
+    background-image: url("https://i.ibb.co/3ysXXJn/133-1336397-download-rainbow-dash-flying-png-photos-my-little-removebg-preview.png");
+    background-size: cover;
+    width: 28vw;
+    height: 25vh;
+    top: 45vh;
+    left: 66vw;
+    z-index: 200;
+    animation: dashie-fly 1s;
+}
+
+@keyframes dashie-fly {
+    from{
+        left:-45vw;
+    }   
+    to{
+        //left:1200px;
+    }
 }
