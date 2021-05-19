@@ -393,11 +393,17 @@
   border: 3px solid #4f253d;
 }
 
+.game {
+  height: 100vh;
+  background-image: url("../../res/images/game-bg.jpg");
+  background-size: cover;
+}
+
 .game-container {
   width: 80%;
-  height: 100vh;
   margin-left: auto;
   margin-right: auto;
+  padding: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -406,10 +412,11 @@
 .cards {
   display: grid;
   grid-template-columns: repeat(5, 100px);
-  grid-template-rows: repeat(5, 100px);
+  grid-template-rows: repeat(auto, 100px);
   grid-gap: 10px;
   perspective: 1000px;
   position: relative;
+  cursor: pointer;
 }
 .cards .card {
   display: inline-block;
@@ -420,6 +427,7 @@
   transform-style: preserve-3d;
   transform-origin: 50% 0;
   z-index: 100;
+  border-radius: 8px;
 }
 .cards .card-front, .cards .card-back {
   position: absolute;
@@ -427,15 +435,43 @@
   height: 100px;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  border-radius: 8px;
 }
 .cards .card-front {
   transform: rotateY(0deg);
   z-index: 2;
   background-color: blueviolet;
+  color: purple;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
 }
 .cards .card-back {
   transform: rotateY(-180deg);
   background-size: cover;
+}
+
+.game-options {
+  background-color: #E8F8F370;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 8px;
+  padding: 4px;
+}
+.game-options p {
+  color: black;
+}
+.game-options .game-play-again {
+  color: black;
+  background-color: yellow;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .rotate {

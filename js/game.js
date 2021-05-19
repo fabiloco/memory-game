@@ -1,4 +1,5 @@
 const container = document.getElementById('game-container');
+const playAgainBtn = document.getElementById('playAgainBtn');
 
 class Game{
     
@@ -40,8 +41,9 @@ class Game{
             const front = document.createElement('div');
             front.classList.add('card-front');
             
-            // Show id's
+            // Show id
             //front.textContent = pony.id;
+            front.textContent = "?";
             
             const back = document.createElement('div');
             back.classList.add('card-back');
