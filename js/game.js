@@ -89,8 +89,8 @@ class Game{
             front.classList.add('card-front');
             
             // Show id
-            front.textContent = pony.id;
-            //front.textContent = "?";
+            //front.textContent = pony.id;
+            front.textContent = "?";
             
             const back = document.createElement('div');
             back.classList.add('card-back');
