@@ -7,16 +7,17 @@ class Game{
         const MAX_PONIES = 10;
         this.allPoniesInfo = []
 
-        this.firstSelect = {node: undefined, id:0};
-        this.secondSelect = {node: undefined, id:0};
         this.firstMovement = false;
         this.corrects = [];
+        this.movements = [];
 
         this.poniesIds = this.generateRanIds(MAX_PONIES);
 
         this.suffleArray(this.poniesIds);
 
         this.getPonies(`${API_URL}character/all?limit=10`);
+
+        this.clickCard = this.clickCard.bind(this);
     }
 
     generateRanIds(max){
@@ -35,7 +36,7 @@ class Game{
 
             const front = document.createElement('div');
             front.classList.add('card-front');
-            //front.textContent = pony.id;
+            front.textContent = pony.id;
             
             const back = document.createElement('div');
             back.classList.add('card-back');
@@ -49,56 +50,86 @@ class Game{
         });
     }
 
+    toggleCard(obj){
+        if(!obj.classList.contains("rotate")){
+            obj.classList.add("rotate");
+        }else if(obj.classList.contains("rotate")) {
+            obj.classList.remove("rotate");
+        }
+    }
+
+    clickCard(e){
+
+        if(e.target.parentNode.classList.contains("card") && !this.corrects.includes(e.target.parentNode.id)){
+                
+            if(!this.firstMovement) {
+                
+                this.movements.push(e.target.parentNode);
+
+                this.firstMovement = true;
+                
+                //e.target.parentNode.classList.toggle("rotate");
+                
+                this.toggleCard(this.movements[this.movements.length-1]);
+
+            }else if(this.firstMovement) {
+                
+                this.movements.push(e.target.parentNode);
+
+                this.toggleCard(this.movements[this.movements.length-1]);
 
 
-    addEvents() {
-        window.addEventListener('click', e => {
-            if(e.target.parentNode.classList.contains("card") && !this.corrects.includes(e.target.parentNode.id)){
-                if(!this.firstMovement) {
-                    this.firstMovement = true;
+                if(this.movements[this.movements.length-1] === this.movements[this.movements.length-2]) {
+                    console.log("same");
+                    //this.firstMovement = false;
+                }
 
-                    this.firstSelect.node = e.target.parentNode;
-                    this.firstSelect.id = e.target.parentNode.id;
+                if(this.movements[this.movements.length-1] !== this.movements[this.movements.length-2]) {
 
-                    console.log(this.firstSelect);
+                    if(this.movements[this.movements.length-1].id === this.movements[this.movements.length-2].id) {
+                        console.log("Right")
+                        this.firstMovement = false;
 
-                    e.target.parentNode.classList.toggle("rotate");
-                    console.log(e.target.parentNode);
-                }else {
-                    this.secondSelect.node = e.target.parentNode;
-                    this.secondSelect.id = e.target.parentNode.id;
+                        //e.target.parentNode.classList.toggle("rotate");
 
-                    console.log(this.secondSelect);
+                        this.corrects.push(e.target.parentNode.id);
 
-                    if(this.firstSelect.node === this.secondSelect.node) {
-                        console.log("same");
                     }
-                    if(this.firstSelect.node !== this.secondSelect.node) {
 
-                        if(this.firstSelect.id === this.secondSelect.id) {
-                            console.log("Right")
-                            this.firstMovement = false;
-                            e.target.parentNode.classList.toggle("rotate");
-                            this.corrects.push(e.target.parentNode.id);
-                            console.log(this.corrects);
-                        }
+                    else if (this.movements[this.movements.length-1].id !== this.movements[this.movements.length-2].id){
+                        console.log("Wrong");
+                        this.firstMovement = false;
 
-                        else{
-                            console.log("Wrong");
-                            this.firstMovement = false;
-                            e.target.parentNode.classList.toggle("rotate");
-                            setTimeout((e) => {
-                                this.firstSelect.node.classList.toggle('rotate');
-                                this.secondSelect.node.classList.toggle('rotate');
-                            } ,700);
-                        }
+                        //e.target.parentNode.classList.toggle("rotate");
+                        
+                        // this.firstSelect.node.classList.toggle('rotate');
+                        // this.secondSelect.node.classList.toggle('rotate');
+
+                        this.removeEvents();
+
+                        setTimeout(()=>{
+                            this.toggleCard(this.movements[this.movements.length-1]);
+                            this.toggleCard(this.movements[this.movements.length-2]);
+
+                            this.addEvents();
+                        }, 500);
+                            
                     }
                 }
             }
-        });
+        }
     }
 
-    getPonies(url){
+
+    addEvents() {
+        window.addEventListener('click', this.clickCard);
+    }
+
+    removeEvents() {
+        window.removeEventListener('click', this.clickCard);
+    }
+
+    getPonies(url) {
         fetch(url)
             .then(res => res.json())
             .then(allPonies => {
