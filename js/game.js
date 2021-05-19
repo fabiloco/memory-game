@@ -1,6 +1,7 @@
 const container = document.getElementById('game-container');
 const playAgainBtn = document.getElementById('playAgainBtn');
 const gameMovements = document.getElementById('game-movements');
+const gameTime = document.getElementById('game-time');
 
 class Game{
     
@@ -20,6 +21,7 @@ class Game{
         this.firstSelect = {node:undefined, id:0};
         this.secondSelect = {node:undefined, id:0};
 
+        this.gameStart = false;
         this.firstMovement = false;
         this.corrects = [];
         this.movements = 0;
@@ -31,6 +33,15 @@ class Game{
         this.getPonies(`${this.API_URL}character/all?limit=${this.MAX_PONIES}`);
 
         this.clickCard = this.clickCard.bind(this);
+        this.clock = this.clock.bind(this);
+
+        // Clock
+        this.hour = 0;
+        this.minutes = 0;
+        this.seconds = 0;
+        this.decimals = 0;
+        this.time = "";
+        this.stop = true;
     }
 
     playAgain(){
@@ -91,7 +102,11 @@ class Game{
 
     clickCard(e){
         if(e.target.parentNode.classList.contains("card") && !this.corrects.includes(e.target.parentNode.id)){
-                
+            if(!this.gameStart){
+                this.startClock();
+                this.gameStart = true;
+            }
+            
             if(!this.firstMovement) {
                 this.firstSelect.node = e.target.parentNode;
                 this.firstSelect.id = e.target.parentNode.id;
@@ -168,6 +183,64 @@ class Game{
                 this.addEvents();
             });
     }
+
+    startClock(){
+        if(this.stop == true){
+            this.stop = false;
+            this.clock();
+        }
+    }
+
+    clock(){
+        if(this.stop == false) {
+            this.decimals++;
+            if(this.decimals > 9) {
+                this.decimals = 0;
+                this.seconds++;
+            }
+            if(this.seconds > 59) {
+                this.seconds = 0;
+                this.minutes++;
+            }
+            if(this.minutes > 59) {
+                this.minutes = 0;
+                this.hour++;
+            }
+            
+            this.showClock();
+            setTimeout(this.clock, 100);
+        }
+    }
+
+    showClock(){
+        if(this.hour < 10) {
+            this.time = '';
+        } else {
+            this.time = this.hour;
+        }
+        if(this.minutes < 10) this.time = this.time + '0';
+        this.time = this.time + this.minutes + ':';
+    
+        if(this.seconds < 10) this.time = this.time + '0';
+        this.time = this.time + this.seconds;
+
+        document.getElementById('game-time').textContent = "Time: "+this.time;
+    }
+
+    stopTime() {
+        this.stop = true;
+    }
+
+    restartTime() {
+        if(this.stop === false) {
+            this.stop = true;
+        }
+
+        this.hour = this.minutes = this.seconds = this.decimals = 0;
+        this.time = '';
+        this.showClock();
+    }
+
 }
 
 document.addEventListener('DOMContentLoaded', e => {
