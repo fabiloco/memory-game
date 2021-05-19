@@ -1,11 +1,20 @@
 const container = document.getElementById('game-container');
 const playAgainBtn = document.getElementById('playAgainBtn');
+const gameMovements = document.getElementById('game-movements');
 
 class Game{
     
     constructor(){
-        const API_URL = "https://ponyweb.ml/v1/";
-        const MAX_PONIES = 10;
+        this.API_URL = "https://ponyweb.ml/v1/";
+        this.MAX_PONIES = 10;
+        this.cardContainer = document.createElement('div');
+
+        this.init();
+
+        this.playAgain();
+    }
+
+    init(){
         this.allPoniesInfo = []
 
         this.firstSelect = {node:undefined, id:0};
@@ -13,15 +22,22 @@ class Game{
 
         this.firstMovement = false;
         this.corrects = [];
-        this.movements = [];
+        this.movements = 0;
 
-        this.poniesIds = this.generateRanIds(MAX_PONIES);
+        this.poniesIds = this.generateRanIds(this.MAX_PONIES);
 
         this.suffleArray(this.poniesIds);
 
-        this.getPonies(`${API_URL}character/all?limit=${MAX_PONIES}`);
+        this.getPonies(`${this.API_URL}character/all?limit=${this.MAX_PONIES}`);
 
         this.clickCard = this.clickCard.bind(this);
+    }
+
+    playAgain(){
+        playAgainBtn.addEventListener('click', (e) => {
+            this.deleteCards();
+            this.init();
+        });
     }
 
     generateRanIds(max){
@@ -30,6 +46,10 @@ class Game{
 
     suffleArray(array){
         array.sort(() => Math.random() - 0.5);
+    }
+
+    deleteCards(){
+        this.cardContainer.parentNode.innerHTML= "";
     }
 
     renderCards(ponies, container){
@@ -57,6 +77,10 @@ class Game{
         });
     }
 
+    refreshMovements(movements){
+        gameMovements.textContent = `Movements: ${movements}`
+    }
+
     toggleCard(obj){
         if(!obj.classList.contains("rotate")){
             obj.classList.add("rotate");
@@ -73,6 +97,9 @@ class Game{
                 this.firstSelect.id = e.target.parentNode.id;
                 this.firstMovement = true;
                 this.toggleCard(this.firstSelect.node);
+                this.movements++;
+                this.refreshMovements(this.movements);
+                console.log(this.movements);
 
             }else if(this.firstMovement) {
                 this.secondSelect.node = e.target.parentNode;
@@ -83,6 +110,9 @@ class Game{
                 }
 
                 if(this.firstSelect.node !== this.secondSelect.node) {
+                    this.movements++;
+                    this.refreshMovements(this.movements);
+                    console.log(this.movements);
 
                     if(this.firstSelect.id === this.secondSelect.id) {
                         console.log("Right")
@@ -128,13 +158,12 @@ class Game{
 
                 console.log(this.allPoniesInfo);
 
-                const cardContainer = document.createElement('div');
-                cardContainer.classList.add('cards');
-                cardContainer.id = "cards";
+                this.cardContainer.classList.add('cards');
+                this.cardContainer.id = "cards";
 
-                this.renderCards(this.allPoniesInfo, cardContainer);
+                this.renderCards(this.allPoniesInfo, this.cardContainer);
 
-                container.appendChild(cardContainer);
+                container.appendChild(this.cardContainer);
 
                 this.addEvents();
             });

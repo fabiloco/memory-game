@@ -8,7 +8,7 @@
     width: 80%;
     margin-left: auto;
     margin-right: auto;
-    padding: 50px;
+    padding: 4em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,7 +22,6 @@
     grid-gap: 10px;
     perspective: 1000px;
     position: relative;
-    cursor: pointer;
 
     .card{
         display: inline-block;
@@ -46,6 +45,7 @@
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             border-radius: 8px;
+            border: 3px solid purple;
         }
 
         &-front{
@@ -57,6 +57,7 @@
             align-items: center;
             justify-content: center;
             font-size: 2em;
+            cursor: pointer;
         }
 
         &-back{
@@ -84,6 +85,7 @@
     .game-play-again{
         color: black;
         background-color: yellow;
+        border: 2px solid yellowgreen;
         padding: 10px;
         border-radius: 8px;
         cursor: pointer;
