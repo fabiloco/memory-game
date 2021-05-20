@@ -32,6 +32,7 @@ class Game{
         this.firstMovement = false;
         this.corrects = [];
         this.movements = 0;
+        this.score = 0;
 
         this.poniesIds = this.generateRanIds(this.MAX_PONIES);
 
@@ -49,6 +50,8 @@ class Game{
         this.decimals = 0;
         this.time = "";
         this.stop = true;
+
+        this.globalSeconds = 0;
     }
 
     playAgain(){
@@ -89,8 +92,8 @@ class Game{
             front.classList.add('card-front');
             
             // Show id
-            //front.textContent = pony.id;
-            front.textContent = "?";
+            front.textContent = pony.id;
+            //front.textContent = "?";
             
             const back = document.createElement('div');
             back.classList.add('card-back');
@@ -208,10 +211,11 @@ class Game{
     }
 
     win() {
+        this.score = Math.floor((this.corrects.length / (this.movements + this.globalSeconds))*100);
         this.stopTime();
         Swal.fire({
             title: 'Congrats!',
-            text: `You have completed the memory game in ${this.time} and with ${this.movements} movements.` ,
+            text:`You have completed the memory game in ${this.time} and with ${this.movements} movements.Your score is:${this.score}`,
             icon: 'success',
             confirmButtonText: 'Cool'
           })
@@ -230,6 +234,7 @@ class Game{
             if(this.decimals > 9) {
                 this.decimals = 0;
                 this.seconds++;
+                this.globalSeconds++;
             }
             if(this.seconds > 59) {
                 this.seconds = 0;
