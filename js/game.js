@@ -8,7 +8,7 @@ class Game{
     
     constructor(){
         this.API_URL = "https://ponyweb.ml/v1/";
-        this.MAX_PONIES = 10;
+        this.MAX_PONIES = 20;
 
         loading.style.display = "flex";
 
